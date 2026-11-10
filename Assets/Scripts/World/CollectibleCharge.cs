@@ -2,17 +2,24 @@ using UnityEngine;
 
 public class CollectibleCharge : MonoBehaviour
 {
+    private bool collected;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player"))
+        if (collected || !other.CompareTag("Player"))
             return;
 
-        QuestManager questManager = FindFirstObjectByType<QuestManager>();
+        collected = true;
 
-        if (questManager != null)
+        if (QuestManager.Instance != null)
         {
-            questManager.CollectCharge();
+            QuestManager.Instance.CollectCharge();
             Destroy(gameObject);
+        }
+        else
+        {
+            Debug.LogWarning("No QuestManager exists in the scene.");
+            collected = false;
         }
     }
 }
