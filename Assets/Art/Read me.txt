@@ -1,0 +1,43 @@
+=====================================================
+TOP-DOWN NATURE & CLIFF TILESET (16x16)
+Created by: Bensri Studio
+Version: 1.0.0
+=====================================================
+
+[ SPECIFICATIONS ]
+- Grid Size: 16x16 pixels
+- Perspective: Top-Down (RPG / Adventure)
+- Color Palette: Earthy Nature Palette
+- Format: Transparent PNG
+
+[ PACKAGE CONTENTS ]
+- Tilesets/
+  * tileset_nature_16x16.png (Ground terrain, cliff walls, path, and water)
+- Props/
+  * props_nature_sheet.png (Trees, bushes, stumps, mushrooms, and details)
+- Previews/
+  * preview_mockup.png
+
+[ ENGINE SETUP INSTRUCTIONS ]
+1. Import Settings:
+   - Filter Mode: Point / Nearest Neighbor (No Anti-aliasing / Smoothing)
+   - Compression: None / Lossless
+2. Sprite Slicing:
+   - Set Grid Size to 16x16 px for the tileset.
+   - For props, slice by cell or manually adjust pivots to the bottom center.
+
+[ LICENSE & TERMS OF USE ]
+YOU ARE ALLOWED TO:
+- Use these assets in non-commercial and commercial projects.
+- Modify and customize the assets to fit your games.
+
+YOU ARE NOT ALLOWED TO:
+- Resell, redistribute, or share these raw assets (or modified versions) as an asset pack.
+- Include these assets in open-source repositories without compiling/bundling.
+- Use these assets to train generative AI models.
+
+[ ATTRIBUTION ]
+- Credit is not mandatory, but appreciated!
+  "Art by Bensri Studio" (Link: your-itch-profile.itch.io)
+
+Thank you for downloading!
