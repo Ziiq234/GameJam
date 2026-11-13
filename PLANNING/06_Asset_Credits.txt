@@ -29,7 +29,9 @@ Dark Ages UI - Pixel Art Asset Pack - Hypnobius (https://hypnobius.itch.io/)
   Used in: imported for the menus and HUD
 
 Character sprites (Assets/Art/Characters: Male1-4, Female1-2)
-  Creator: TODO - add creator name and link
+  Pack: Fantasy RPG Characters - Old Town Citizens (Free Pack, 16x16)
+  Creator: Electric Lemon
+  Link: https://electriclemon.itch.io/old-town-citizens-rpg-series
   Used in: player, Cornelius, Theodor, Mage, Blacksmith, villagers, evil wizards
 
 Beach, water and boat tiles (Assets/Art/Beach)

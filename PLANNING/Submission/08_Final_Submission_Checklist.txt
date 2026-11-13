@@ -1,0 +1,30 @@
+THE DARKNESS BELOW - FINAL SUBMISSION CHECKLIST
+Game Jam 2026 - Jamie Jones and Joe Buckley
+Deadline: Friday 13 November 2026
+
+GAME
+[X] Full playthrough done start to finish with no bugs
+[X] Build made (OUTPUT folder, The Darkness Below.exe)
+[X] Latest version pushed to github.com/Ziiq234/GameJam (main)
+
+DOCUMENTS (this folder)
+[X] 01_Game_Design_Document.docX
+[X] 02_Storyboard.docX
+[X] 03_Wireframes.docX
+[X] 04_Visual_Concepts.docX
+[X] 05_Testing_Log.XlsX
+[X] 06_Asset_Credits.tXt
+[X] 07_AI_Use_Log.tXt
+[X] 08_Final_Submission_Checklist.tXt (this file)
+
+CREDITS
+[X] Village, dungeon, enemy and UI packs credited
+[X] Character sprites credited (Old Town Citizens by Electric Lemon)
+[ ] Beach, water and boat tiles - add creator name and link
+[X] Credits page in the game main menu
+[X] AI use written down in the AI use log
+
+UPLOAD
+[ ] Upload the zipped build to Teams
+[ ] Upload the Submission folder to Teams
+[ ] Put the GitHub link in the submission

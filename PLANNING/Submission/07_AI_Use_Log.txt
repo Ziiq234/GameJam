@@ -1,0 +1,31 @@
+THE DARKNESS BELOW - AI USE LOG
+Jamie Jones and Joe Buckley - Game Jam 2026
+
+This log records where AI tools were used to help make the game.
+All AI-written code was added to the project by Jamie, tested in Unity,
+and kept or changed based on that testing. Check and add anything missing.
+
+---------------------------------------------------------------
+GitHub Copilot 
+---------------------------------------------------------------
+- Genrall scripting assistance and help building the version of the game: health and attack, enemy AI, quest tracking,
+  collectibles, scene transitions, temporary menus and the dungeon setup. Help fixing bugs during the dungeon build (
+  bat visuals).
+
+---------------------------------------------------------------
+ChatGPT 
+---------------------------------------------------------------
+- Help merging Joe's village map branch (environment-map) with the main
+  game branch on GitHub. due to collisons 
+
+- Animated player and NPC sprites (CharacterSpriteAnimator Script creation)
+- Made the game icon (pixel firework over a cave with a purple crystal),
+  based on the concept art in our project plan.
+- Drafted the final submission documents (game design document,
+  storyboard, wireframes, visual concepts, testing log and checklist)
+  from the finished game. The storyboard frames use our real sprites.
+  The testing log is based on the bugs we found and fixed while testing.
+
+
+- AI Dev tools Script left in the game for testing: L teleports to the current quest
+target, K completes the current quest step (DevMenu.cs).

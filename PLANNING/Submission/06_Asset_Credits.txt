@@ -1,0 +1,46 @@
+THE DARKNESS BELOW - ASSET CREDITS
+Game Jam 2026 - Jamie Jones and Joe Buckley
+
+Story: Jamie Jones and Joe Buckley
+Village map: Joe Buckley
+Programming and testing: Jamie Jones (with AI assistance - see 07_AI_Use_Log.txt)
+
+---------------------------------------------------------------
+Pack / creator / licence / where it's used
+---------------------------------------------------------------
+
+Fantasy Lands Houses Demo - Szadi art
+  Licence: free for personal and commercial use, credit appreciated
+           (see Assets/Art/Village/license.txt)
+  Used in: village houses, props and nature tiles (Village scene)
+
+S.Salmon's Underground - S.Salmon
+  Licence: see the pack's page
+  Used in: dungeon map (Dungeon and WizardDungeon scenes),
+           Mole animations used for the rats
+
+Dark Fantasy Enemies 2D Pixel Art - MonoPixelArt
+  Licence: see the pack's page
+  Used in: bat enemies (idle, fly, attack, hurt, death animations)
+
+Dark Ages UI - Pixel Art Asset Pack - Hypnobius (https://hypnobius.itch.io/)
+  Licence: free for personal and commercial use, credit optional
+           (see Assets/UI/DarkAgesUI/LICENSE.txt)
+  Used in: imported for the menus and HUD
+
+Character sprites (Assets/Art/Characters: Male1-4, Female1-2)
+  Pack: Fantasy RPG Characters - Old Town Citizens (Free Pack, 16x16)
+  Creator: Electric Lemon
+  Link: https://electriclemon.itch.io/old-town-citizens-rpg-series
+  Used in: player, Cornelius, Theodor, Mage, Blacksmith, villagers, evil wizards
+
+Beach, water and boat tiles (Assets/Art/Beach)
+  Creator: TODO - add creator name and link
+  Used in: island coastlines, water, boats and rafts (Village scene)
+
+Made in code (no outside assets):
+  swords, slash effect, magic bolts, lanterns, signposts, fireworks,
+  all music and sound effects (SoundManager.cs)
+
+Game icon (Assets/Art/Icon/GameIcon.png and PLANNING/GameIcon.ico)
+  Made for this project (AI assisted, based on our plan's concept art)

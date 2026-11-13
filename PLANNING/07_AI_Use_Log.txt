@@ -34,6 +34,11 @@ Claude (13 November, evening)
 - Made the game icon (pixel firework over a cave with a purple crystal),
   based on the concept art in our project plan.
 - Wrote first drafts of 06_Asset_Credits.txt and this log.
+- Tidied the project folders and script names in Unity.
+- Drafted the final submission documents (game design document,
+  storyboard, wireframes, visual concepts, testing log and checklist)
+  from the finished game. The storyboard frames use our real sprites.
+  The testing log is based on the bugs we found and fixed while testing.
 
 What we did ourselves:
 - Game idea, story and village map (Joe), original project plan.
