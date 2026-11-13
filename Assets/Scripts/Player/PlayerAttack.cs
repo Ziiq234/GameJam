@@ -8,7 +8,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && !DialogueBox.Busy)
         {
             Attack();
         }
@@ -31,4 +31,4 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
-}
+}

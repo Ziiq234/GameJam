@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public bool IsVictory => isVictory;
 
     private GUIStyle hudStyle;
+    private GUIStyle objectiveStyle;
     private GUIStyle titleStyle;
     private GUIStyle buttonStyle;
     private GUIStyle panelStyle;
@@ -131,9 +132,14 @@ public class GameManager : MonoBehaviour
             return;
 
         hudStyle = new GUIStyle(GUI.skin.label);
-        hudStyle.fontSize = 24;
+        hudStyle.fontSize = 16;
         hudStyle.normal.textColor = Color.white;
         hudStyle.fontStyle = FontStyle.Bold;
+
+        objectiveStyle = new GUIStyle(hudStyle);
+        objectiveStyle.fontSize = 14;
+        objectiveStyle.wordWrap = true;
+        objectiveStyle.normal.textColor = new Color(1f, 0.85f, 0.4f);
 
         titleStyle = new GUIStyle(GUI.skin.label);
         titleStyle.fontSize = 42;
@@ -185,10 +191,15 @@ public class GameManager : MonoBehaviour
             FindPlayer();
         }
 
+        // dark backing so the text shows up on any background
+        // keep clear of the minimap in the top right
+        float hudWidth = Mathf.Min(460, Screen.width - 220);
+        UIHelper.DrawPanel(new Rect(10, 10, hudWidth, 84));
+
         if (playerHealth != null)
         {
             GUI.Label(
-                new Rect(20, 20, 300, 50),
+                new Rect(20, 12, 300, 26),
                 "Health: " + playerHealth.CurrentHealth + "/" + playerHealth.MaxHealth,
                 hudStyle
             );
@@ -196,9 +207,22 @@ public class GameManager : MonoBehaviour
 
         if (QuestManager.Instance != null)
         {
+            QuestManager quest = QuestManager.Instance;
+
             GUI.Label(
-                new Rect(20, 65, 700, 50),
-                QuestManager.Instance.GetObjectiveText(),
+                new Rect(20, 36, hudWidth - 20, 36),
+                quest.GetObjectiveText(),
+                objectiveStyle
+            );
+
+            string items = "Gold: " + quest.Gold;
+
+            if (quest.HasShield) items += "   Shield";
+            if (quest.HasRing) items += "   Enchanted Ring";
+
+            GUI.Label(
+                new Rect(20, 66, 400, 26),
+                items,
                 hudStyle
             );
         }
@@ -285,11 +309,7 @@ public class GameManager : MonoBehaviour
 
     private void DrawVictory()
     {
-        GUI.Box(
-            new Rect(0, 0, Screen.width, Screen.height),
-            "",
-            panelStyle
-        );
+        UIHelper.DrawRect(new Rect(0, 0, Screen.width, Screen.height), new Color(0.05f, 0.04f, 0.1f, 0.85f));
 
         GUI.Label(
             new Rect(
@@ -329,16 +349,7 @@ public class GameManager : MonoBehaviour
 
     private void DrawOverlayPanel(string title)
     {
-        GUI.Box(
-            new Rect(
-                Screen.width / 2f - 250,
-                120,
-                500,
-                380
-            ),
-            "",
-            panelStyle
-        );
+        UIHelper.DrawPanel(new Rect(Screen.width / 2f - 250, 120, 500, 380));
 
         GUI.Label(
             new Rect(
@@ -356,4 +367,4 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-}
+}

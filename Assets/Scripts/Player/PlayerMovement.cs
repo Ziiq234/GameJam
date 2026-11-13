@@ -15,6 +15,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        // stand still while talking to someone
+        if (DialogueBox.IsOpen)
+        {
+            movement = Vector2.zero;
+            return;
+        }
+
         movement = new Vector2(
             Keyboard.current.aKey.isPressed ? -1 : Keyboard.current.dKey.isPressed ? 1 : 0,
             Keyboard.current.sKey.isPressed ? -1 : Keyboard.current.wKey.isPressed ? 1 : 0
@@ -25,4 +32,4 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.linearVelocity = movement * moveSpeed;
     }
-}
+}

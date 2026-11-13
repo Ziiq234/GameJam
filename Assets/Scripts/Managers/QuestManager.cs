@@ -1,19 +1,46 @@
 using UnityEngine;
 
+// Keeps track of where the player is in the main quest, plus gold and items.
+// Lives across scenes so progress isn't lost going in and out of dungeons.
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance { get; private set; }
 
+    public enum QuestStep
+    {
+        TalkToCornelius,
+        DeliverMessage,
+        ReturnToCornelius,
+        ForestDungeon,
+        BringChargesBack,
+        CollectTaxes,
+        BringTaxesBack,
+        VisitTheodor,
+        WizardDungeon,
+        FinalReturn,
+        Finished
+    }
+
+    [SerializeField] private int forestCharges = 2;
     [SerializeField] private int requiredCharges = 3;
 
+    private QuestStep step;
     private int collectedCharges;
-    private bool questStarted;
-    private bool chargesComplete;
+    private int gold;
+    private bool carryingTaxes;
+    private bool hasShield;
+    private bool hasRing;
 
+    public QuestStep Step => step;
     public int CollectedCharges => collectedCharges;
     public int RequiredCharges => requiredCharges;
-    public bool QuestStarted => questStarted;
-    public bool ChargesComplete => chargesComplete;
+    public int Gold => gold;
+    public bool CarryingTaxes => carryingTaxes;
+    public bool HasShield => hasShield;
+    public bool HasRing => hasRing;
+
+    // the shop opens once the forest dungeon is done
+    public bool ShopUnlocked => step >= QuestStep.CollectTaxes;
 
     private void Awake()
     {
@@ -27,46 +54,66 @@ public class QuestManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void StartQuest()
+    public void SetStep(QuestStep newStep)
     {
-        if (questStarted)
-            return;
-
-        questStarted = true;
-        Debug.Log("Quest started: Recover three enchanted gunpowder charges.");
+        step = newStep;
+        Debug.Log("Quest step: " + step);
     }
 
-    public void CollectCharge()
+    public void AddGold(int amount)
     {
-        if (!questStarted)
-        {
-            StartQuest();
-        }
+        gold += amount;
+        Debug.Log("Gold: " + gold);
+    }
 
-        if (chargesComplete)
-            return;
+    public bool SpendGold(int amount)
+    {
+        if (gold < amount)
+            return false;
+
+        gold -= amount;
+        return true;
+    }
+
+    public void SetCarryingTaxes(bool value)
+    {
+        carryingTaxes = value;
+    }
+
+    public void GiveShield()
+    {
+        hasShield = true;
+    }
+
+    public void GiveRing()
+    {
+        hasRing = true;
+    }
+
+    // returns false if the player can't pick up a charge yet
+    public bool CollectCharge()
+    {
+        if (step != QuestStep.ForestDungeon && step != QuestStep.WizardDungeon)
+            return false;
 
         collectedCharges++;
-        collectedCharges = Mathf.Min(collectedCharges, requiredCharges);
+        Debug.Log("Charges: " + collectedCharges + "/" + requiredCharges);
 
-        Debug.Log(
-            "Gunpowder Charges: "
-            + collectedCharges
-            + "/"
-            + requiredCharges
-        );
-
-        if (collectedCharges >= requiredCharges)
+        if (step == QuestStep.ForestDungeon && collectedCharges >= forestCharges)
         {
-            chargesComplete = true;
-            Debug.Log("All gunpowder charges collected!");
+            SetStep(QuestStep.BringChargesBack);
         }
+        else if (step == QuestStep.WizardDungeon && collectedCharges >= requiredCharges)
+        {
+            SetStep(QuestStep.FinalReturn);
+        }
+
+        return true;
     }
 
     public void CompleteQuest()
     {
-        if (!chargesComplete)
-            return;
+        SetStep(QuestStep.Finished);
 
         if (GameManager.Instance != null)
         {
@@ -76,26 +123,52 @@ public class QuestManager : MonoBehaviour
 
     public string GetObjectiveText()
     {
-        if (!questStarted)
+        switch (step)
         {
-            return "Objective: Speak to the village keeper";
+            case QuestStep.TalkToCornelius:
+                return "Objective: Speak to Cornelius";
+            case QuestStep.DeliverMessage:
+                return "Objective: Take the message to Theodor in Halberd (boat on the north shore)";
+            case QuestStep.ReturnToCornelius:
+                return "Objective: Return to Cornelius";
+            case QuestStep.ForestDungeon:
+                return "Objective: Find the charges in the Dense Forest dungeon (" + collectedCharges + "/" + forestCharges + ")";
+            case QuestStep.BringChargesBack:
+                return "Objective: Bring the charges to Cornelius";
+            case QuestStep.CollectTaxes:
+                return "Objective: Collect the mage's taxes on Wizard Island (boat on the south shore)";
+            case QuestStep.BringTaxesBack:
+                return "Objective: Give the taxes to Cornelius";
+            case QuestStep.VisitTheodor:
+                return "Objective: Visit Theodor in Halberd";
+            case QuestStep.WizardDungeon:
+                return "Objective: Find the last charge in the Wizard Island dungeon";
+            case QuestStep.FinalReturn:
+                return "Objective: Bring the last charge to Cornelius";
+            default:
+                return "The festival is saved!";
         }
-
-        if (!chargesComplete)
-        {
-            return "Enchanted Charges: "
-                   + collectedCharges
-                   + "/"
-                   + requiredCharges;
-        }
-
-        return "Objective: Return to the village keeper";
     }
 
     public void ResetQuest()
     {
+        step = QuestStep.TalkToCornelius;
         collectedCharges = 0;
-        questStarted = false;
-        chargesComplete = false;
+        gold = 0;
+        carryingTaxes = false;
+        hasShield = false;
+        hasRing = false;
+    }
+
+    // still used by the old NPCInteraction script
+    public bool QuestStarted => step != QuestStep.TalkToCornelius;
+    public bool ChargesComplete => collectedCharges >= requiredCharges;
+
+    public void StartQuest()
+    {
+        if (step == QuestStep.TalkToCornelius)
+        {
+            SetStep(QuestStep.DeliverMessage);
+        }
     }
 }

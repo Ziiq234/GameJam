@@ -9,17 +9,17 @@ public class CollectibleCharge : MonoBehaviour
         if (collected || !other.CompareTag("Player"))
             return;
 
-        collected = true;
-
-        if (QuestManager.Instance != null)
-        {
-            QuestManager.Instance.CollectCharge();
-            Destroy(gameObject);
-        }
-        else
+        if (QuestManager.Instance == null)
         {
             Debug.LogWarning("No QuestManager exists in the scene.");
-            collected = false;
+            return;
+        }
+
+        // only picked up if the quest says you're looking for charges
+        if (QuestManager.Instance.CollectCharge())
+        {
+            collected = true;
+            Destroy(gameObject);
         }
     }
-}
+}
