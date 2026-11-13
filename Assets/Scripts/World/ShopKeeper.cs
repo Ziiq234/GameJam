@@ -84,6 +84,7 @@ public class ShopKeeper : MonoBehaviour
         else if (quest.SpendGold(swordPrice))
         {
             quest.GiveSword();
+            SoundManager.Play("coin");
             shopMessage = "A fine choice. Mind the sharp end!";
         }
         else
@@ -103,6 +104,7 @@ public class ShopKeeper : MonoBehaviour
         else if (QuestManager.Instance.SpendGold(potionPrice))
         {
             health.HealFull();
+            SoundManager.Play("coin");
             shopMessage = "Drink up. Good as new.";
         }
         else

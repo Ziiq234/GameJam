@@ -19,7 +19,7 @@ public class MiniMap : MonoBehaviour
         new Vector2(0f, 6f),
         new Vector2(-50f, 46f),
         new Vector2(-12f, -76f),
-        new Vector2(68f, -28f),
+        new Vector2(76f, -27f),
         new Vector2(-1.5f, -7f)
     };
 
@@ -76,6 +76,10 @@ public class MiniMap : MonoBehaviour
     private void OnGUI()
     {
         if (mapCamera == null || player == null)
+            return;
+
+        // hide the minimap during the fireworks
+        if (GameManager.Instance != null && GameManager.Instance.IsEnding)
             return;
 
         if (labelStyle == null)

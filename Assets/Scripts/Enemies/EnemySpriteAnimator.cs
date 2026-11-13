@@ -1,7 +1,8 @@
 using UnityEngine;
 
-// Plays the bat animations from the sprite strips in Art/Enemies/Bat.
-// Each strip is one row of 64x64 frames.
+// Plays enemy animations from sprite strips (one row of frames per image),
+// like the bats in Art/Enemies/Bat or the moles in Art/Dungeon/Mole Anims.
+// Hurt, death and attack strips are optional.
 public class EnemySpriteAnimator : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer target;
@@ -30,6 +31,7 @@ public class EnemySpriteAnimator : MonoBehaviour
     private float timer;
     private bool isHurt;
     private bool isDead;
+    private float flashTimer;
 
     private Rigidbody2D rb;
     private Transform player;
@@ -41,6 +43,7 @@ public class EnemySpriteAnimator : MonoBehaviour
         idleFrames = CutStrip(idleStrip);
         moveFrames = CutStrip(moveStrip);
         attackFrames = CutStrip(attackStrip);
+        if (attackFrames == null) attackFrames = moveFrames;
         hurtFrames = CutStrip(hurtStrip);
         deathFrames = CutStrip(deathStrip);
 
@@ -59,12 +62,15 @@ public class EnemySpriteAnimator : MonoBehaviour
 
     private Sprite[] CutStrip(Texture2D strip)
     {
+        if (strip == null)
+            return null;
+
         int count = strip.width / frameSize;
         Sprite[] frames = new Sprite[count];
 
         for (int i = 0; i < count; i++)
         {
-            Rect rect = new Rect(i * frameSize, 0, frameSize, frameSize);
+            Rect rect = new Rect(i * frameSize, 0, frameSize, strip.height);
             frames[i] = Sprite.Create(strip, rect, new Vector2(0.5f, 0.5f), pixelsPerUnit, 0, SpriteMeshType.FullRect);
         }
 
@@ -73,6 +79,10 @@ public class EnemySpriteAnimator : MonoBehaviour
 
     public float DeathTime()
     {
+        // enemies with no death animation just flash and vanish
+        if (deathFrames == null)
+            return 0.25f;
+
         return deathFrames.Length / framesPerSecond;
     }
 
@@ -80,14 +90,29 @@ public class EnemySpriteAnimator : MonoBehaviour
     {
         if (isDead) return;
 
-        isHurt = true;
         target.color = new Color(1f, 0.5f, 0.5f);
+
+        if (hurtFrames == null)
+        {
+            // no hurt animation, so just flash red for a moment
+            flashTimer = 0.15f;
+            return;
+        }
+
+        isHurt = true;
         SwitchTo(hurtFrames);
     }
 
     public void PlayDeath()
     {
         isDead = true;
+
+        if (deathFrames == null)
+        {
+            target.color = new Color(1f, 0.3f, 0.3f);
+            return;
+        }
+
         target.color = Color.white;
         SwitchTo(deathFrames);
     }
@@ -103,6 +128,12 @@ public class EnemySpriteAnimator : MonoBehaviour
 
     private void Update()
     {
+        if (flashTimer > 0)
+        {
+            flashTimer -= Time.deltaTime;
+            if (flashTimer <= 0) target.color = Color.white;
+        }
+
         if (!isDead && !isHurt)
         {
             SwitchTo(PickLoop());

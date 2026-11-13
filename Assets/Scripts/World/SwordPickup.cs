@@ -31,6 +31,7 @@ public class SwordPickup : MonoBehaviour
         if (player != null && Vector2.Distance(transform.position, player.position) < 0.8f)
         {
             QuestManager.Instance.GiveMageSword();
+            SoundManager.Play("pickup");
             DialogueBox.Show("", new[] { "You picked up the Mage's Sword! It hits even harder than the Blacksmith's." });
             Destroy(gameObject);
         }

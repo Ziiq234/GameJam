@@ -10,7 +10,7 @@ public class NPCWander : MonoBehaviour
     [SerializeField] private float wanderRadius = 6f;
     [SerializeField] private float minWait = 0.5f;
     [SerializeField] private float maxWait = 1.5f;
-    [SerializeField] private float stopNearPlayer = 1.2f;
+    [SerializeField] private float stopNearPlayer = 1.6f;
 
     private Rigidbody2D rb;
     private Transform player;

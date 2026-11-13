@@ -65,6 +65,7 @@ public class PlayerAttack : MonoBehaviour
         Vector2 hitCentre = (Vector2)transform.position + facing * (range * 0.4f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(hitCentre, range * 0.75f);
+        SoundManager.Play("swing");
 
         foreach (Collider2D hit in hits)
         {
@@ -73,6 +74,7 @@ public class PlayerAttack : MonoBehaviour
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(damage);
+                SoundManager.Play("hit");
             }
         }
 

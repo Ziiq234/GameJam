@@ -23,12 +23,29 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = MaxHealth;
+        // keep the same health as in the last scene
+        if (QuestManager.Instance != null && QuestManager.Instance.SavedHealth > 0)
+        {
+            currentHealth = Mathf.Min(QuestManager.Instance.SavedHealth, MaxHealth);
+        }
+        else
+        {
+            currentHealth = MaxHealth;
+        }
     }
 
     public void HealFull()
     {
         currentHealth = MaxHealth;
+        SaveHealth();
+    }
+
+    private void SaveHealth()
+    {
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.SavedHealth = currentHealth;
+        }
     }
 
     private void Update()
@@ -47,6 +64,8 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
+        SaveHealth();
+        SoundManager.Play("hurt");
 
         Debug.Log("Player Health: " + currentHealth);
 

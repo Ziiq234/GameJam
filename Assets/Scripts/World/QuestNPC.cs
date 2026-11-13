@@ -69,7 +69,7 @@ public class QuestNPC : MonoBehaviour
                 {
                     "So Theodor told you about the rocket charges...",
                     "Every year we hold a firework festival, but this year the enchanted charges were stolen and hidden in the dungeons.",
-                    "There's a dungeon in the dense forest to the south-east. Bring me back the charges and I'll pay you well.",
+                    "There's a dungeon in the dense forest to the south-east, crawling with bats and rats. Bring me back the charges and I'll pay you well.",
                     "But you're not going down there with your bare hands. Buy a sword from the Blacksmith, just south of here.",
                     "Theodor's gold won't quite cover it. The bats along the forest road carry coins, go and earn the rest."
                 }, () =>
@@ -156,6 +156,12 @@ public class QuestNPC : MonoBehaviour
     {
         QuestManager quest = QuestManager.Instance;
 
+        // main story first, then the side quest
+        bool storyStep = quest.Step == QuestManager.QuestStep.DeliverMessage || quest.Step == QuestManager.QuestStep.VisitTheodor;
+
+        if (!storyStep && OfferLetter())
+            return;
+
         switch (quest.Step)
         {
             case QuestManager.QuestStep.TalkToCornelius:
@@ -207,6 +213,22 @@ public class QuestNPC : MonoBehaviour
                 Say(new[] { "Good luck out there, friend." });
                 break;
         }
+    }
+
+    // Theodor's side quest - offered when he's got nothing more important to say
+    private bool OfferLetter()
+    {
+        QuestManager quest = QuestManager.Instance;
+
+        if (quest.GetSideQuest("Letter") != 0 || quest.Step < QuestManager.QuestStep.ReturnToCornelius)
+            return false;
+
+        Say(new[]
+        {
+            "Before you go... could you do me a favour?",
+            "Take this letter to Ella in the start town. And don't read it!"
+        }, () => quest.SetSideQuest("Letter", 1));
+        return true;
     }
 
     private void TalkMage()

@@ -65,6 +65,7 @@ public class EnemyHealth : MonoBehaviour
         if (QuestManager.Instance != null)
         {
             QuestManager.Instance.AddGold(goldDrop);
+            if (goldDrop > 0) SoundManager.Play("coin");
             QuestManager.Instance.EnemyKilled(questArea);
         }
 

@@ -100,6 +100,7 @@ public class MageBoss : MonoBehaviour
         sr.sprite = boltSprite;
         sr.sortingOrder = 8;
 
+        SoundManager.Play("bolt");
         MagicBolt magic = bolt.AddComponent<MagicBolt>();
         Vector2 direction = (player.position - transform.position).normalized;
         magic.Launch(direction, boltSpeed, boltDamage, player);

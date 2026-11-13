@@ -51,6 +51,7 @@ public class DialogueBox : MonoBehaviour
         if (Keyboard.current.eKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             lineIndex++;
+            SoundManager.Play("blip");
 
             if (lineIndex >= lines.Length)
             {
