@@ -119,50 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &50230532
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 50230534}
-  - component: {fileID: 50230533}
-  m_Layer: 0
-  m_Name: Grid (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!156049354 &50230533
-Grid:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50230532}
-  m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 0}
-  m_CellGap: {x: 0, y: 0, z: 0}
-  m_CellLayout: 0
-  m_CellSwizzle: 0
---- !u!4 &50230534
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50230532}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &245940872
 GameObject:
   m_ObjectHideFlags: 0
@@ -326171,7 +326127,7 @@ GameObject:
   - component: {fileID: 541807079}
   - component: {fileID: 541807078}
   m_Layer: 0
-  m_Name: PropsTileset_1
+  m_Name: VillageProp_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -346999,7 +346955,7 @@ GameObject:
   - component: {fileID: 928627541}
   - component: {fileID: 928627540}
   m_Layer: 0
-  m_Name: water_full_tiles_16x16_8f_16
+  m_Name: AnimatedWater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352456,7 +352412,7 @@ GameObject:
   - component: {fileID: 330806110}
   - component: {fileID: 330806109}
   m_Layer: 0
-  m_Name: props_nature_sheet_10 (3)
+  m_Name: NatureProp_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352548,7 +352504,7 @@ GameObject:
   - component: {fileID: 346686087}
   - component: {fileID: 346686086}
   m_Layer: 0
-  m_Name: fishing_boat_side_moored_pingpong_3f_2
+  m_Name: FishingBoat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352640,7 +352596,7 @@ GameObject:
   - component: {fileID: 701215082}
   - component: {fileID: 701215081}
   m_Layer: 0
-  m_Name: PropsTileset_1 (2)
+  m_Name: VillageProp_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352732,7 +352688,7 @@ GameObject:
   - component: {fileID: 924290680}
   - component: {fileID: 924290679}
   m_Layer: 0
-  m_Name: PropsTileset_1 (4)
+  m_Name: VillageProp_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352824,7 +352780,7 @@ GameObject:
   - component: {fileID: 1027891704}
   - component: {fileID: 1027891703}
   m_Layer: 0
-  m_Name: PropsTileset_1 (1)
+  m_Name: VillageProp_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352916,7 +352872,7 @@ GameObject:
   - component: {fileID: 1115397185}
   - component: {fileID: 1115397184}
   m_Layer: 0
-  m_Name: PropsTileset_1 (3)
+  m_Name: VillageProp_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353008,7 +352964,7 @@ GameObject:
   - component: {fileID: 1211442445}
   - component: {fileID: 1211442444}
   m_Layer: 0
-  m_Name: props_nature_sheet_10 (1)
+  m_Name: NatureProp_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353100,7 +353056,7 @@ GameObject:
   - component: {fileID: 1533507139}
   - component: {fileID: 1533507138}
   m_Layer: 0
-  m_Name: props_nature_sheet_10
+  m_Name: NatureProp_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353192,7 +353148,7 @@ GameObject:
   - component: {fileID: 2032628428}
   - component: {fileID: 2032628427}
   m_Layer: 0
-  m_Name: props_nature_sheet_10 (2)
+  m_Name: NatureProp_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353284,7 +353240,7 @@ GameObject:
   - component: {fileID: 1977877284}
   - component: {fileID: 1977877283}
   m_Layer: 0
-  m_Name: raft_side_move_4f_4
+  m_Name: Raft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -356529,7 +356485,7 @@ GameObject:
   - component: {fileID: 900001007}
   - component: {fileID: 900001008}
   m_Layer: 0
-  m_Name: Bat_1
+  m_Name: RoadBat_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -356762,7 +356718,7 @@ GameObject:
   - component: {fileID: 900001010}
   - component: {fileID: 900001011}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -356860,7 +356816,7 @@ GameObject:
   - component: {fileID: 900001019}
   - component: {fileID: 900001020}
   m_Layer: 0
-  m_Name: Bat_2
+  m_Name: RoadBat_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357093,7 +357049,7 @@ GameObject:
   - component: {fileID: 900001022}
   - component: {fileID: 900001023}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357191,7 +357147,7 @@ GameObject:
   - component: {fileID: 900001031}
   - component: {fileID: 900001032}
   m_Layer: 0
-  m_Name: Bat_3
+  m_Name: RoadBat_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357424,7 +357380,7 @@ GameObject:
   - component: {fileID: 900001034}
   - component: {fileID: 900001035}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357522,7 +357478,7 @@ GameObject:
   - component: {fileID: 900001043}
   - component: {fileID: 900001044}
   m_Layer: 0
-  m_Name: Bat_4
+  m_Name: RoadBat_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357755,7 +357711,7 @@ GameObject:
   - component: {fileID: 900001046}
   - component: {fileID: 900001047}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357890,7 +357846,7 @@ GameObject:
   - component: {fileID: 900001057}
   - component: {fileID: 900001058}
   m_Layer: 0
-  m_Name: Bat_1
+  m_Name: IslandBat_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358123,7 +358079,7 @@ GameObject:
   - component: {fileID: 900001060}
   - component: {fileID: 900001061}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358221,7 +358177,7 @@ GameObject:
   - component: {fileID: 900001069}
   - component: {fileID: 900001070}
   m_Layer: 0
-  m_Name: Bat_2
+  m_Name: IslandBat_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358454,7 +358410,7 @@ GameObject:
   - component: {fileID: 900001072}
   - component: {fileID: 900001073}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358552,7 +358508,7 @@ GameObject:
   - component: {fileID: 900001081}
   - component: {fileID: 900001082}
   m_Layer: 0
-  m_Name: Bat_3
+  m_Name: IslandBat_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358785,7 +358741,7 @@ GameObject:
   - component: {fileID: 900001084}
   - component: {fileID: 900001085}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358883,7 +358839,7 @@ GameObject:
   - component: {fileID: 900001093}
   - component: {fileID: 900001094}
   m_Layer: 0
-  m_Name: Bat_4
+  m_Name: IslandBat_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359116,7 +359072,7 @@ GameObject:
   - component: {fileID: 900001096}
   - component: {fileID: 900001097}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359214,7 +359170,7 @@ GameObject:
   - component: {fileID: 900001105}
   - component: {fileID: 900001106}
   m_Layer: 0
-  m_Name: Bat_5
+  m_Name: IslandBat_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359447,7 +359403,7 @@ GameObject:
   - component: {fileID: 900001108}
   - component: {fileID: 900001109}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359545,7 +359501,7 @@ GameObject:
   - component: {fileID: 900001117}
   - component: {fileID: 900001118}
   m_Layer: 0
-  m_Name: Bat_6
+  m_Name: IslandBat_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359778,7 +359734,7 @@ GameObject:
   - component: {fileID: 900001120}
   - component: {fileID: 900001121}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -360116,7 +360072,6 @@ Transform:
   - {fileID: 900007036}
   - {fileID: 900007039}
   - {fileID: 900007042}
-  - {fileID: 900007045}
   - {fileID: 900007048}
   - {fileID: 900007051}
   m_Father: {fileID: 0}
@@ -360779,53 +360734,6 @@ MonoBehaviour:
   kind: 0
   signText: 
   readRange: 2.5
---- !u!1 &900007044
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 900007045}
-  - component: {fileID: 900007046}
-  m_Layer: 0
-  m_Name: Signpost_15
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &900007045
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900007044}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.05, y: 4.43, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 900007001}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &900007046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900007044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b04c42da984cd3a3a4e16db1379233, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Decoration
-  kind: 1
-  signText: 'North-west: Boat to Halberd'
-  readRange: 2.5
 --- !u!1 &900007047
 GameObject:
   m_ObjectHideFlags: 0
@@ -360837,7 +360745,7 @@ GameObject:
   - component: {fileID: 900007048}
   - component: {fileID: 900007049}
   m_Layer: 0
-  m_Name: Signpost_16
+  m_Name: Signpost_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -360884,7 +360792,7 @@ GameObject:
   - component: {fileID: 900007051}
   - component: {fileID: 900007052}
   m_Layer: 0
-  m_Name: Signpost_17
+  m_Name: Signpost_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -360933,7 +360841,6 @@ SceneRoots:
   - {fileID: 1726858576}
   - {fileID: 1922815958}
   - {fileID: 541807079}
-  - {fileID: 50230534}
   - {fileID: 1283702842}
   - {fileID: 522547899}
   - {fileID: 928627542}

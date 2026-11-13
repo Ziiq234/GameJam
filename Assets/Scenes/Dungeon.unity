@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 20962319}
   - component: {fileID: 20962372}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Bat_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -578,7 +578,7 @@ GameObject:
   - component: {fileID: 664730718}
   - component: {fileID: 664730719}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1015,7 +1015,7 @@ GameObject:
   - component: {fileID: 1610567086}
   - component: {fileID: 1610567139}
   m_Layer: 0
-  m_Name: Enemy (1)
+  m_Name: Bat_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2942,7 +2942,7 @@ GameObject:
   - component: {fileID: 1913493934}
   - component: {fileID: 1913493935}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3176,7 +3176,7 @@ GameObject:
   - component: {fileID: 2090802500}
   - component: {fileID: 2090802501}
   m_Layer: 0
-  m_Name: Bat-IdleFly_0
+  m_Name: BatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4308,7 +4308,7 @@ GameObject:
   - component: {fileID: 2122815898}
   - component: {fileID: 2122815951}
   m_Layer: 0
-  m_Name: Enemy (2)
+  m_Name: Bat_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

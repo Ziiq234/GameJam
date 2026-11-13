@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -45,15 +44,6 @@ public class PlayerHealth : MonoBehaviour
         if (QuestManager.Instance != null)
         {
             QuestManager.Instance.SavedHealth = currentHealth;
-        }
-    }
-
-    private void Update()
-    {
-        // DEV TEST: Press H to damage the player
-        if (Keyboard.current.hKey.wasPressedThisFrame)
-        {
-            TakeDamage(1);
         }
     }
 

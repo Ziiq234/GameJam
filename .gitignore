@@ -27,3 +27,8 @@
 # OS files
 .DS_Store
 Thumbs.db
+
+# Game builds and local helper files
+OUTPUT/
+git_push.bat
+git_push_log.txt

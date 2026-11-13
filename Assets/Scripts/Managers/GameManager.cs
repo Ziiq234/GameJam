@@ -358,8 +358,10 @@ public class GameManager : MonoBehaviour
         {
             DrawInfoPage("CREDITS", new[]
             {
-                "Made by Jamie Jones and Joe for Game Jam 2026",
-                "Story and village map by Joe",
+                "Made by Jamie Jones and Joe Buckley for Game Jam 2026",
+                "Story by Jamie Jones and Joe Buckley",
+                "Village map by Joe Buckley",
+                "Character and beach art: see PLANNING/06_Asset_Credits.txt",
                 "Village: Fantasy Lands Houses Demo by Szadi art",
                 "Dungeon: S.Salmon's Underground by S.Salmon",
                 "Enemies: Dark Fantasy Enemies by MonoPixelArt",

@@ -317,7 +317,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // DEV ONLY - used by DevMenu to skip the current quest step. Delete before submitting!
+    // DEV TOOL - used by DevMenu (K key) to skip the current quest step
     public void DevCompleteStep()
     {
         switch (step)

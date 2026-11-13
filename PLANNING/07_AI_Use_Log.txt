@@ -1,0 +1,44 @@
+THE DARKNESS BELOW - AI USE LOG
+Jamie Jones and Joe Buckley - Game Jam 2026
+
+This log records where AI tools were used to help make the game.
+All AI-written code was added to the project by Jamie, tested in Unity,
+and kept or changed based on that testing. Check and add anything missing.
+
+---------------------------------------------------------------
+GitHub Copilot (before 13 November)
+---------------------------------------------------------------
+- Step-by-step help building the first version of the game: player
+  movement, camera follow, health and attack, enemy AI, quest tracking,
+  collectibles, scene transitions, temporary menus and the dungeon setup.
+- Help fixing bugs during the dungeon build (collision boundaries,
+  bat visuals).
+
+---------------------------------------------------------------
+ChatGPT (13 November, at college)
+---------------------------------------------------------------
+- Help merging Joe's village map branch (environment-map) with the main
+  game branch on GitHub.
+
+---------------------------------------------------------------
+Claude (13 November, evening)
+---------------------------------------------------------------
+- Brought in Joe's latest village map changes.
+- Animated player and NPC sprites (CharacterSpriteAnimator), animated
+  bats and rats (EnemySpriteAnimator), wandering villagers (NPCWander).
+- Turned Joe's storyline into the quest system (QuestManager, QuestNPC),
+  dialogue box, boats between islands, minimap and water collision.
+- Blacksmith shop, sword, Mage boss fight, Wizard Island dungeon,
+  side quests, fireworks ending, main menu pages, generated sound and
+  music, and decorations.
+- Made the game icon (pixel firework over a cave with a purple crystal),
+  based on the concept art in our project plan.
+- Wrote first drafts of 06_Asset_Credits.txt and this log.
+
+What we did ourselves:
+- Game idea, story and village map (Joe), original project plan.
+- Decided what to add and how it should work, tested every stage in
+  Unity, reported bugs and asked for changes, and did a full playthrough.
+
+Dev tools left in the game for testing: L teleports to the current quest
+target, K completes the current quest step (DevMenu.cs).
