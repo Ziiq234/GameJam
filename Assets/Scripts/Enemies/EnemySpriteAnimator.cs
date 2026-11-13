@@ -1,18 +1,11 @@
 using UnityEngine;
 
-// Plays enemy animations from horizontal sprite strips (one row of frames
-// per image), like the Dark Fantasy Enemies Bat sheets.
-// Idle when still, Move when chasing, Attack when close to the player,
-// Hurt when damaged and Death when killed (called by EnemyHealth).
+// Plays the bat animations from the sprite strips in Art/Enemies/Bat.
+// Each strip is one row of 64x64 frames.
 public class EnemySpriteAnimator : MonoBehaviour
 {
-    private enum State { Idle, Move, Attack, Hurt, Death }
-
-    [Header("Where to draw")]
-    [Tooltip("The SpriteRenderer that shows the enemy (e.g. the bat child object)")]
     [SerializeField] private SpriteRenderer target;
 
-    [Header("Sprite strips")]
     [SerializeField] private Texture2D idleStrip;
     [SerializeField] private Texture2D moveStrip;
     [SerializeField] private Texture2D attackStrip;
@@ -21,168 +14,163 @@ public class EnemySpriteAnimator : MonoBehaviour
     [SerializeField] private int frameSize = 64;
     [SerializeField] private float pixelsPerUnit = 100f;
 
-    [Header("Timing")]
     [SerializeField] private float framesPerSecond = 12f;
     [SerializeField] private float attackRange = 1.2f;
     [SerializeField] private float movingThreshold = 0.1f;
-
-    [Header("Facing")]
-    [Tooltip("Tick if the frames on the sheet face left")]
     [SerializeField] private bool framesFaceLeft = true;
 
-    private Sprite[] idleFrames, moveFrames, attackFrames, hurtFrames, deathFrames;
-    private Rigidbody2D body;
+    private Sprite[] idleFrames;
+    private Sprite[] moveFrames;
+    private Sprite[] attackFrames;
+    private Sprite[] hurtFrames;
+    private Sprite[] deathFrames;
+
+    private Sprite[] currentFrames;
+    private int frame;
+    private float timer;
+    private bool isHurt;
+    private bool isDead;
+
+    private Rigidbody2D rb;
     private Transform player;
-
-    private State state = State.Idle;
-    private int frameIndex;
-    private float frameTimer;
-    private Color baseColour = Color.white;
-
-    public float DeathDuration =>
-        deathFrames != null ? deathFrames.Length / framesPerSecond : 0f;
 
     private void Awake()
     {
-        body = GetComponent<Rigidbody2D>();
-        if (target == null) target = GetComponentInChildren<SpriteRenderer>();
-        if (target != null) baseColour = target.color;
+        rb = GetComponent<Rigidbody2D>();
 
-        idleFrames = Slice(idleStrip);
-        moveFrames = Slice(moveStrip) ?? idleFrames;
-        attackFrames = Slice(attackStrip) ?? moveFrames;
-        hurtFrames = Slice(hurtStrip);
-        deathFrames = Slice(deathStrip);
+        idleFrames = CutStrip(idleStrip);
+        moveFrames = CutStrip(moveStrip);
+        attackFrames = CutStrip(attackStrip);
+        hurtFrames = CutStrip(hurtStrip);
+        deathFrames = CutStrip(deathStrip);
+
+        currentFrames = idleFrames;
     }
 
     private void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject != null) player = playerObject.transform;
+
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
     }
 
-    private Sprite[] Slice(Texture2D strip)
+    private Sprite[] CutStrip(Texture2D strip)
     {
-        if (strip == null) return null;
-
         int count = strip.width / frameSize;
         Sprite[] frames = new Sprite[count];
+
         for (int i = 0; i < count; i++)
         {
             Rect rect = new Rect(i * frameSize, 0, frameSize, frameSize);
-            frames[i] = Sprite.Create(strip, rect, new Vector2(0.5f, 0.5f),
-                pixelsPerUnit, 0, SpriteMeshType.FullRect);
-            frames[i].name = $"{strip.name}_{i}";
+            frames[i] = Sprite.Create(strip, rect, new Vector2(0.5f, 0.5f), pixelsPerUnit, 0, SpriteMeshType.FullRect);
         }
+
         return frames;
     }
 
-    // Called by EnemyHealth when the enemy takes damage but survives.
+    public float DeathTime()
+    {
+        return deathFrames.Length / framesPerSecond;
+    }
+
     public void PlayHurt()
     {
-        if (state == State.Death) return;
-        if (hurtFrames != null) SetState(State.Hurt);
-        if (target != null) target.color = new Color(1f, 0.5f, 0.5f);
+        if (isDead) return;
+
+        isHurt = true;
+        target.color = new Color(1f, 0.5f, 0.5f);
+        SwitchTo(hurtFrames);
     }
 
-    // Called by EnemyHealth when the enemy dies.
     public void PlayDeath()
     {
-        if (target != null) target.color = baseColour;
-        if (deathFrames != null) SetState(State.Death);
+        isDead = true;
+        target.color = Color.white;
+        SwitchTo(deathFrames);
     }
 
-    private void SetState(State newState)
+    private void SwitchTo(Sprite[] frames)
     {
-        if (state == newState) return;
-        state = newState;
-        frameIndex = 0;
-        frameTimer = 0f;
+        if (currentFrames == frames) return;
+
+        currentFrames = frames;
+        frame = 0;
+        timer = 0;
     }
 
     private void Update()
     {
-        if (target == null || idleFrames == null) return;
-
-        // One-shot animations (hurt, death) play to the end before anything else.
-        bool locked = state == State.Death || state == State.Hurt;
-        if (!locked)
+        if (!isDead && !isHurt)
         {
-            SetState(ChooseLoopState());
+            SwitchTo(PickLoop());
         }
 
-        UpdateFacing();
-
-        Sprite[] frames = FramesFor(state);
-        frameTimer += Time.deltaTime;
-        if (frameTimer >= 1f / framesPerSecond)
+        if (!isDead)
         {
-            frameTimer = 0f;
-            frameIndex++;
+            FacePlayerOrMovement();
+        }
 
-            if (frameIndex >= frames.Length)
+        timer += Time.deltaTime;
+
+        if (timer >= 1f / framesPerSecond)
+        {
+            timer = 0;
+            frame++;
+
+            if (frame >= currentFrames.Length)
             {
-                if (state == State.Death)
+                if (isDead)
                 {
-                    frameIndex = frames.Length - 1; // hold the last frame
+                    // stay on the last death frame until destroyed
+                    frame = currentFrames.Length - 1;
                 }
-                else if (state == State.Hurt)
+                else if (isHurt)
                 {
-                    target.color = baseColour;
-                    state = ChooseLoopState();
-                    frameIndex = 0;
-                    frames = FramesFor(state);
+                    isHurt = false;
+                    target.color = Color.white;
+                    SwitchTo(PickLoop());
                 }
                 else
                 {
-                    frameIndex = 0;
+                    frame = 0;
                 }
             }
         }
 
-        target.sprite = frames[Mathf.Min(frameIndex, frames.Length - 1)];
+        target.sprite = currentFrames[frame];
     }
 
-    private State ChooseLoopState()
+    private Sprite[] PickLoop()
     {
-        if (player != null &&
-            Vector2.Distance(transform.position, player.position) <= attackRange)
+        if (player != null && Vector2.Distance(transform.position, player.position) <= attackRange)
         {
-            return State.Attack;
+            return attackFrames;
         }
 
-        Vector2 velocity = body != null ? body.linearVelocity : Vector2.zero;
-        return velocity.sqrMagnitude > movingThreshold * movingThreshold
-            ? State.Move
-            : State.Idle;
-    }
-
-    private void UpdateFacing()
-    {
-        if (state == State.Death) return;
-
-        float directionX = 0f;
-        if (body != null && Mathf.Abs(body.linearVelocity.x) > movingThreshold)
-            directionX = body.linearVelocity.x;
-        else if (player != null)
-            directionX = player.position.x - transform.position.x;
-
-        if (Mathf.Abs(directionX) > 0.01f)
+        if (rb.linearVelocity.magnitude > movingThreshold)
         {
-            bool movingLeft = directionX < 0f;
-            target.flipX = movingLeft != framesFaceLeft;
+            return moveFrames;
         }
+
+        return idleFrames;
     }
 
-    private Sprite[] FramesFor(State s)
+    private void FacePlayerOrMovement()
     {
-        switch (s)
+        float x = rb.linearVelocity.x;
+
+        if (Mathf.Abs(x) < movingThreshold && player != null)
         {
-            case State.Move: return moveFrames;
-            case State.Attack: return attackFrames;
-            case State.Hurt: return hurtFrames ?? idleFrames;
-            case State.Death: return deathFrames ?? idleFrames;
-            default: return idleFrames;
+            x = player.position.x - transform.position.x;
+        }
+
+        if (x != 0)
+        {
+            bool goingLeft = x < 0;
+            target.flipX = goingLeft != framesFaceLeft;
         }
     }
 }

@@ -47,16 +47,15 @@ public class EnemyHealth : MonoBehaviour
             return;
         }
 
-        // Stop the enemy chasing, hurting or blocking the player
-        // while its death animation plays.
+        // stop it moving and hurting the player while the death animation plays
         EnemyController controller = GetComponent<EnemyController>();
         if (controller != null) controller.enabled = false;
 
         EnemyDamage enemyDamage = GetComponent<EnemyDamage>();
         if (enemyDamage != null) enemyDamage.enabled = false;
 
-        foreach (Collider2D col in GetComponents<Collider2D>())
-            col.enabled = false;
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
@@ -66,6 +65,6 @@ public class EnemyHealth : MonoBehaviour
         }
 
         spriteAnimator.PlayDeath();
-        Destroy(gameObject, spriteAnimator.DeathDuration);
+        Destroy(gameObject, spriteAnimator.DeathTime());
     }
 }
