@@ -2258,6 +2258,7 @@ GameObject:
   - component: {fileID: 1822749467}
   - component: {fileID: 1822749466}
   - component: {fileID: 1822749514}
+  - component: {fileID: 900001500}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2306,7 +2307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef99b65a408486349a506388fc37e0e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 3
+  maxHealth: 5
 --- !u!114 &1822749468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2471,6 +2472,19 @@ MonoBehaviour:
   idleFramesPerSecond: 4
   walkFramesPerSecond: 8
   movingThreshold: 0.05
+--- !u!114 &900001500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822749464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123a2b64d277431b9402c00b07b255de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeldSword
+  swingTime: 0.12
 --- !u!1 &1833769139
 GameObject:
   m_ObjectHideFlags: 0

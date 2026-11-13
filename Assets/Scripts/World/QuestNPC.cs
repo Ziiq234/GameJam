@@ -69,12 +69,28 @@ public class QuestNPC : MonoBehaviour
                 {
                     "So Theodor told you about the rocket charges...",
                     "Every year we hold a firework festival, but this year the enchanted charges were stolen and hidden in the dungeons.",
-                    "There's a dungeon in the dense forest to the south-east. Bring me back the charges and I'll pay you well."
-                }, () => quest.SetStep(QuestManager.QuestStep.ForestDungeon));
+                    "There's a dungeon in the dense forest to the south-east. Bring me back the charges and I'll pay you well.",
+                    "But you're not going down there with your bare hands. Buy a sword from the Blacksmith, just south of here.",
+                    "Theodor's gold won't quite cover it. The bats along the forest road carry coins, go and earn the rest."
+                }, () =>
+                {
+                    if (quest.HasSword)
+                        quest.SetStep(QuestManager.QuestStep.ForestDungeon);
+                    else
+                        quest.SetStep(QuestManager.QuestStep.BuySword);
+                });
+                break;
+
+            case QuestManager.QuestStep.BuySword:
+                Say(new[] { "Get that sword from the Blacksmith first. 75 gold. The bats on the forest road drop coins." });
                 break;
 
             case QuestManager.QuestStep.ForestDungeon:
-                Say(new[] { "The dense forest is to the south-east. Bring me those charges!" });
+                Say(new[]
+                {
+                    "The dense forest is to the south-east. Bring me those charges!",
+                    "If you need a better weapon, the Blacksmith just south of here sells swords."
+                });
                 break;
 
             case QuestManager.QuestStep.BringChargesBack:
@@ -98,7 +114,7 @@ public class QuestNPC : MonoBehaviour
             case QuestManager.QuestStep.BringTaxesBack:
                 Say(new[]
                 {
-                    "The tax money! Thank you.",
+                    "The tax money! And the mage attacked you? Well, he always was a bad loser.",
                     "Take this shield. It was my father's, and you'll need it more than me.",
                     "Oh, and Theodor sent word. He wants to see you in Halberd again."
                 }, () =>
@@ -172,6 +188,21 @@ public class QuestNPC : MonoBehaviour
                 Say(new[] { "The wizard dungeon is on Wizard Island, to the south." });
                 break;
 
+            case QuestManager.QuestStep.ReturnToCornelius:
+            case QuestManager.QuestStep.BringChargesBack:
+            case QuestManager.QuestStep.BringTaxesBack:
+            case QuestManager.QuestStep.FinalReturn:
+                Say(new[] { "Cornelius will be waiting for you back in the start town." });
+                break;
+
+            case QuestManager.QuestStep.ForestDungeon:
+                Say(new[] { "The dense forest is south-east of the start town. Watch out for the bats." });
+                break;
+
+            case QuestManager.QuestStep.CollectTaxes:
+                Say(new[] { "Getting money out of that mage? Good luck with that!" });
+                break;
+
             default:
                 Say(new[] { "Good luck out there, friend." });
                 break;
@@ -184,15 +215,31 @@ public class QuestNPC : MonoBehaviour
 
         if (quest.Step == QuestManager.QuestStep.CollectTaxes)
         {
-            Say(new[]
+            if (!quest.MageTaskStarted)
             {
-                "Taxes? TAXES?!",
-                "Fine... here's your 50 gold. Now leave me alone."
-            }, () =>
+                Say(new[]
+                {
+                    "Taxes? TAXES?!",
+                    "How am I meant to earn money with bats nesting all over my island?",
+                    "Get rid of five of them and maybe I'll think about paying."
+                }, () => quest.StartMageTask());
+            }
+            else if (!quest.MageTaskDone)
             {
-                quest.SetCarryingTaxes(true);
-                quest.SetStep(QuestManager.QuestStep.BringTaxesBack);
-            });
+                Say(new[] { "There are still bats flapping about. I'm not paying until they're gone!" });
+            }
+            else
+            {
+                Say(new[]
+                {
+                    "You killed my bats?! Those were my pets!",
+                    "Taxes? I'll pay you in FIREBALLS!"
+                }, () => GetComponent<MageBoss>().StartFight());
+            }
+        }
+        else if (quest.Step == QuestManager.QuestStep.BringTaxesBack)
+        {
+            Say(new[] { "You've got my gold. Take it to Cornelius and leave me be!" });
         }
         else
         {
@@ -207,6 +254,8 @@ public class QuestNPC : MonoBehaviour
 
     private void OnGUI()
     {
+        UIHelper.DrawNameTag(transform.position, character.ToString());
+
         if (playerNearby && !DialogueBox.IsOpen)
         {
             UIHelper.DrawPrompt("Press E to talk to " + character);

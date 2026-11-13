@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // stand still while talking to someone
-        if (DialogueBox.IsOpen)
+        if (DialogueBox.IsOpen || ShopKeeper.IsOpen)
         {
             movement = Vector2.zero;
             return;

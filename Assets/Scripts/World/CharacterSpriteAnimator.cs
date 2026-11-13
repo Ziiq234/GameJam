@@ -28,6 +28,17 @@ public class CharacterSpriteAnimator : MonoBehaviour
     private float timer;
     private Vector3 lastPosition;
 
+    // which way the character is looking, used for aiming attacks
+    public Vector2 Facing
+    {
+        get
+        {
+            if (direction == 0) return facingLeft ? Vector2.left : Vector2.right;
+            if (direction == 2) return Vector2.up;
+            return Vector2.down;
+        }
+    }
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();

@@ -11,6 +11,7 @@ public class QuestManager : MonoBehaviour
         TalkToCornelius,
         DeliverMessage,
         ReturnToCornelius,
+        BuySword,
         ForestDungeon,
         BringChargesBack,
         CollectTaxes,
@@ -23,6 +24,7 @@ public class QuestManager : MonoBehaviour
 
     [SerializeField] private int forestCharges = 2;
     [SerializeField] private int requiredCharges = 3;
+    [SerializeField] private int mageBatsNeeded = 5;
 
     private QuestStep step;
     private int collectedCharges;
@@ -30,6 +32,11 @@ public class QuestManager : MonoBehaviour
     private bool carryingTaxes;
     private bool hasShield;
     private bool hasRing;
+    private bool hasSword;
+    private bool mageTaskStarted;
+    private bool mageDefeated;
+    private bool hasMageSword;
+    private int mageBatsKilled;
 
     public QuestStep Step => step;
     public int CollectedCharges => collectedCharges;
@@ -38,6 +45,11 @@ public class QuestManager : MonoBehaviour
     public bool CarryingTaxes => carryingTaxes;
     public bool HasShield => hasShield;
     public bool HasRing => hasRing;
+    public bool HasSword => hasSword;
+    public bool MageTaskStarted => mageTaskStarted;
+    public bool MageDefeated => mageDefeated;
+    public bool HasMageSword => hasMageSword;
+    public bool MageTaskDone => mageBatsKilled >= mageBatsNeeded;
 
     // the shop opens once the forest dungeon is done
     public bool ShopUnlocked => step >= QuestStep.CollectTaxes;
@@ -90,6 +102,47 @@ public class QuestManager : MonoBehaviour
         hasRing = true;
     }
 
+    public void GiveSword()
+    {
+        hasSword = true;
+
+        // buying the sword is part of the story
+        if (step == QuestStep.BuySword)
+        {
+            SetStep(QuestStep.ForestDungeon);
+        }
+    }
+
+    // the Mage's sword is better than the Blacksmith's
+    public void GiveMageSword()
+    {
+        hasMageSword = true;
+        hasSword = true;
+    }
+
+    // beating the Mage gets you his tax money
+    public void DefeatMage()
+    {
+        mageDefeated = true;
+        carryingTaxes = true;
+        SetStep(QuestStep.BringTaxesBack);
+    }
+
+    public void StartMageTask()
+    {
+        mageTaskStarted = true;
+    }
+
+    // called by EnemyHealth when an enemy dies
+    public void EnemyKilled(string area)
+    {
+        if (area == "WizardIsland" && mageTaskStarted && step == QuestStep.CollectTaxes)
+        {
+            mageBatsKilled++;
+            Debug.Log("Wizard Island bats: " + mageBatsKilled + "/" + mageBatsNeeded);
+        }
+    }
+
     // returns false if the player can't pick up a charge yet
     public bool CollectCharge()
     {
@@ -131,12 +184,18 @@ public class QuestManager : MonoBehaviour
                 return "Objective: Take the message to Theodor in Halberd (boat on the north shore)";
             case QuestStep.ReturnToCornelius:
                 return "Objective: Return to Cornelius";
+            case QuestStep.BuySword:
+                return "Objective: Buy a sword from the Blacksmith (75 gold). Bats near the forest road drop gold";
             case QuestStep.ForestDungeon:
                 return "Objective: Find the charges in the Dense Forest dungeon (" + collectedCharges + "/" + forestCharges + ")";
             case QuestStep.BringChargesBack:
                 return "Objective: Bring the charges to Cornelius";
             case QuestStep.CollectTaxes:
-                return "Objective: Collect the mage's taxes on Wizard Island (boat on the south shore)";
+                if (!mageTaskStarted)
+                    return "Objective: Collect the mage's taxes on Wizard Island (boat on the south shore)";
+                if (!MageTaskDone)
+                    return "Objective: Clear the bats on Wizard Island (" + mageBatsKilled + "/" + mageBatsNeeded + ")";
+                return "Objective: Confront the Mage";
             case QuestStep.BringTaxesBack:
                 return "Objective: Give the taxes to Cornelius";
             case QuestStep.VisitTheodor:
@@ -158,6 +217,11 @@ public class QuestManager : MonoBehaviour
         carryingTaxes = false;
         hasShield = false;
         hasRing = false;
+        hasSword = false;
+        mageTaskStarted = false;
+        mageBatsKilled = 0;
+        mageDefeated = false;
+        hasMageSword = false;
     }
 
     // still used by the old NPCInteraction script
@@ -169,6 +233,25 @@ public class QuestManager : MonoBehaviour
         if (step == QuestStep.TalkToCornelius)
         {
             SetStep(QuestStep.DeliverMessage);
+        }
+    }
+
+    // DEV ONLY - used by DevMenu to skip the current quest step. Delete before submitting!
+    public void DevCompleteStep()
+    {
+        switch (step)
+        {
+            case QuestStep.TalkToCornelius: SetStep(QuestStep.DeliverMessage); break;
+            case QuestStep.DeliverMessage: AddGold(50); SetStep(QuestStep.ReturnToCornelius); break;
+            case QuestStep.ReturnToCornelius: SetStep(hasSword ? QuestStep.ForestDungeon : QuestStep.BuySword); break;
+            case QuestStep.BuySword: GiveSword(); break;
+            case QuestStep.ForestDungeon: collectedCharges = forestCharges; SetStep(QuestStep.BringChargesBack); break;
+            case QuestStep.BringChargesBack: AddGold(100); SetStep(QuestStep.CollectTaxes); break;
+            case QuestStep.CollectTaxes: mageTaskStarted = true; mageBatsKilled = mageBatsNeeded; DefeatMage(); GiveMageSword(); break;
+            case QuestStep.BringTaxesBack: carryingTaxes = false; GiveShield(); SetStep(QuestStep.VisitTheodor); break;
+            case QuestStep.VisitTheodor: SetStep(QuestStep.WizardDungeon); break;
+            case QuestStep.WizardDungeon: collectedCharges = requiredCharges; SetStep(QuestStep.FinalReturn); break;
+            case QuestStep.FinalReturn: GiveRing(); CompleteQuest(); break;
         }
     }
 }

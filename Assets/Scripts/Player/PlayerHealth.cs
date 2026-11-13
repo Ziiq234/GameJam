@@ -3,16 +3,32 @@ using UnityEngine.InputSystem;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 3;
+    [SerializeField] private int maxHealth = 5;
 
     private int currentHealth;
 
     public int CurrentHealth => currentHealth;
-    public int MaxHealth => maxHealth;
+
+    // the shield from Cornelius gives 2 extra hearts
+    public int MaxHealth
+    {
+        get
+        {
+            if (QuestManager.Instance != null && QuestManager.Instance.HasShield)
+                return maxHealth + 2;
+
+            return maxHealth;
+        }
+    }
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = MaxHealth;
+    }
+
+    public void HealFull()
+    {
+        currentHealth = MaxHealth;
     }
 
     private void Update()
@@ -70,4 +86,4 @@ public class PlayerHealth : MonoBehaviour
             GameManager.Instance.GameOver();
         }
     }
-}
+}

@@ -5,6 +5,7 @@ public static class UIHelper
 {
     private static Texture2D whiteTexture;
     private static GUIStyle promptStyle;
+    private static GUIStyle nameStyle;
 
     public static Texture2D White
     {
@@ -51,5 +52,33 @@ public static class UIHelper
         Rect rect = new Rect(Screen.width / 2f - 140, Screen.height - 170, 280, 28);
         DrawPanel(rect);
         GUI.Label(rect, text, promptStyle);
+    }
+
+    // small name floating above a character's head
+    public static void DrawNameTag(Vector3 worldPosition, string label)
+    {
+        if (Camera.main == null)
+            return;
+
+        if (nameStyle == null)
+        {
+            nameStyle = new GUIStyle(GUI.skin.label);
+            nameStyle.fontSize = 12;
+            nameStyle.fontStyle = FontStyle.Bold;
+            nameStyle.alignment = TextAnchor.MiddleCenter;
+            nameStyle.normal.textColor = new Color(1f, 0.85f, 0.4f);
+        }
+
+        Vector3 screen = Camera.main.WorldToScreenPoint(worldPosition + Vector3.up * 1f);
+
+        // off screen
+        if (screen.z < 0 || screen.x < 0 || screen.x > Screen.width || screen.y < 0 || screen.y > Screen.height)
+            return;
+
+        Vector2 size = nameStyle.CalcSize(new GUIContent(label));
+        Rect rect = new Rect(screen.x - size.x / 2f - 3, Screen.height - screen.y - 9, size.x + 6, 18);
+
+        DrawRect(rect, new Color(0, 0, 0, 0.6f));
+        GUI.Label(rect, label, nameStyle);
     }
 }

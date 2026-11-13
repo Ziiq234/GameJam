@@ -3,31 +3,52 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 2;
+    [SerializeField] private int goldDrop = 10;
+    [Tooltip("Which area this enemy belongs to, used for quests (e.g. WizardIsland)")]
+    [SerializeField] private string questArea = "";
+    [Tooltip("Extra health once the player has a sword, so fights stay tough")]
+    [SerializeField] private int extraHealthWithSword = 3;
+    [SerializeField] private bool destroyOnDeath = true;
 
-    private int currentHealth;
+    private int damageTaken;
     private bool isDead;
     private EnemySpriteAnimator spriteAnimator;
+
+    // other scripts (like the Mage boss) can listen for these
+    public event System.Action Damaged;
+    public event System.Action Died;
+
+    public int MaxHealth
+    {
+        get
+        {
+            if (QuestManager.Instance != null && QuestManager.Instance.HasSword)
+                return maxHealth + extraHealthWithSword;
+
+            return maxHealth;
+        }
+    }
+
+    public int CurrentHealth => Mathf.Max(MaxHealth - damageTaken, 0);
 
     private void Awake()
     {
         spriteAnimator = GetComponent<EnemySpriteAnimator>();
     }
 
-    private void Start()
-    {
-        currentHealth = maxHealth;
-    }
-
     public void TakeDamage(int damage)
     {
-        if (isDead)
+        // switched off enemies (like the Mage before his fight) can't be hurt
+        if (isDead || !enabled)
             return;
 
-        currentHealth -= damage;
+        damageTaken += damage;
 
-        Debug.Log("Enemy Health: " + currentHealth);
+        Debug.Log(name + " health: " + CurrentHealth);
 
-        if (currentHealth <= 0)
+        Damaged?.Invoke();
+
+        if (damageTaken >= MaxHealth)
         {
             Die();
         }
@@ -40,6 +61,17 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         isDead = true;
+
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.AddGold(goldDrop);
+            QuestManager.Instance.EnemyKilled(questArea);
+        }
+
+        Died?.Invoke();
+
+        if (!destroyOnDeath)
+            return;
 
         if (spriteAnimator == null)
         {

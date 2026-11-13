@@ -12,11 +12,23 @@ public class MiniMap : MonoBehaviour
     [SerializeField] private int mapSize = 170;
     [SerializeField] private int bigMapSize = 420;
 
+    // place names shown on the map
+    [SerializeField] private string[] placeNames = { "Start Town", "Halberd", "Wizard Island", "Dense Forest", "Blacksmith" };
+    [SerializeField] private Vector2[] placePositions =
+    {
+        new Vector2(0f, 6f),
+        new Vector2(-50f, 46f),
+        new Vector2(-12f, -76f),
+        new Vector2(68f, -28f),
+        new Vector2(-1.5f, -7f)
+    };
+
     private Camera mapCamera;
     private RenderTexture mapTexture;
     private Transform player;
     private bool showWholeMap;
     private GUIStyle labelStyle;
+    private GUIStyle placeStyle;
 
     private Transform questTarget;
     private QuestManager.QuestStep lastStep;
@@ -72,6 +84,10 @@ public class MiniMap : MonoBehaviour
             labelStyle.fontSize = 12;
             labelStyle.alignment = TextAnchor.MiddleCenter;
             labelStyle.normal.textColor = Color.white;
+
+            placeStyle = new GUIStyle(labelStyle);
+            placeStyle.fontStyle = FontStyle.Bold;
+            placeStyle.normal.textColor = new Color(1f, 0.9f, 0.6f);
         }
 
         int size = showWholeMap ? bigMapSize : mapSize;
@@ -81,6 +97,8 @@ public class MiniMap : MonoBehaviour
 
         UIHelper.DrawPanel(area);
         GUI.DrawTexture(area, mapTexture);
+
+        DrawPlaceNames(area);
 
         // quest marker, kept on the edge of the map if it's too far away
         Transform target = GetQuestTarget();
@@ -99,6 +117,24 @@ public class MiniMap : MonoBehaviour
         string hint = showWholeMap ? "Yellow = where to go" : "Hold M for full map";
         UIHelper.DrawRect(new Rect(area.x, area.yMax + 2, area.width, 18), new Color(0, 0, 0, 0.6f));
         GUI.Label(new Rect(area.x, area.yMax + 2, area.width, 18), hint, labelStyle);
+    }
+
+    private void DrawPlaceNames(Rect area)
+    {
+        for (int i = 0; i < placeNames.Length && i < placePositions.Length; i++)
+        {
+            Vector2 point = WorldToMap(placePositions[i], area, false);
+
+            // skip names that are off the edge of the minimap
+            if (!area.Contains(point))
+                continue;
+
+            Vector2 textSize = placeStyle.CalcSize(new GUIContent(placeNames[i]));
+            Rect rect = new Rect(point.x - textSize.x / 2f - 3, point.y - 9, textSize.x + 6, 18);
+
+            UIHelper.DrawRect(rect, new Color(0, 0, 0, 0.6f));
+            GUI.Label(rect, placeNames[i], placeStyle);
+        }
     }
 
     // turns a world position into a point on the minimap
@@ -148,6 +184,9 @@ public class MiniMap : MonoBehaviour
                 break;
             case QuestManager.QuestStep.ForestDungeon:
                 targetName = "DungeonEntrance";
+                break;
+            case QuestManager.QuestStep.BuySword:
+                targetName = "Blacksmith";
                 break;
             case QuestManager.QuestStep.CollectTaxes:
                 targetName = "Mage";

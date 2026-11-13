@@ -217,6 +217,8 @@ public class GameManager : MonoBehaviour
 
             string items = "Gold: " + quest.Gold;
 
+            if (quest.HasMageSword) items += "   Mage's Sword";
+            else if (quest.HasSword) items += "   Sword";
             if (quest.HasShield) items += "   Shield";
             if (quest.HasRing) items += "   Enchanted Ring";
 
